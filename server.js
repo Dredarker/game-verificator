@@ -8,12 +8,14 @@ const server = http.createServer((req, res) => {
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  if (req.url === "/healthz") {res.writeHead(200, {"Content-Type": "text/plain"}); return res.end("200 OK");}
-  else {
+  if (req.url === "/healthz") {
+    res.writeHead(200, {"Content-Type": "text/plain"});
+    return res.end("200 OK");
+  } else {
     res.writeHead(200, {
       "Content-Type": "text/plain"
     });
-    res.end("200 OK");
+    return res.end("200 OK");
   }
 });
 
