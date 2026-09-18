@@ -18,7 +18,6 @@ const server = http.createServer((req, res) => {
     res.end(body);
   }
   if (req.url === "/healthz") {res.writeHead(200, {"Content-Type": "text/plain"}); return res.end("200 OK");}
-  res.writeHead(404); res.end();
 });
 
 server.listen(PORT, () => {
