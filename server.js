@@ -6,7 +6,9 @@ const server = http.createServer((req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  if (req.url === "/") {
+
+  if (req.url === "/healthz") {res.writeHead(200, {"Content-Type": "text/plain"}); return res.end("200 OK");}
+  else {
     const url = new URL(req.url, `https://${req.headers.host || "localhost"}`);
     const body = [...url.searchParams.entries()]
       .map(([key, value]) => `${key}=${value}`)
@@ -17,7 +19,6 @@ const server = http.createServer((req, res) => {
     });
     res.end(body);
   }
-  if (req.url === "/healthz") {res.writeHead(200, {"Content-Type": "text/plain"}); return res.end("200 OK");}
 });
 
 server.listen(PORT, () => {
