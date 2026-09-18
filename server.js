@@ -2,6 +2,7 @@ const http = require("http");
 
 const PORT = process.env.PORT || 3000;
 const STORAGEAPI = process.env.storageAPI;
+const AVALIABLEGAMES = ["cubic-buildPM"];
 
 const server = http.createServer(async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -14,7 +15,7 @@ const server = http.createServer(async (req, res) => {
   } else {
     const url = new URL("https://localhost:3000"+req.url);
     const searchParams = Object.fromEntries(url.searchParams.entries())
-    if (!avaliablegames.includes(searchParams.game)) {
+    if (!AVALIABLEGAMES.includes(searchParams.game)) {
       res.writeHead(400, {
         "Content-Type": "text/plain"
       });
@@ -25,11 +26,7 @@ const server = http.createServer(async (req, res) => {
       });
       return res.end("Browser id is empty");
     }
-    let keyverify = null;
-
-    if (searchParams.game === "cubix") {
-      keyverify = await getInStorage(searchParams.game+"-"+searchParams.browserid);
-    }
+    let keyverify = await getInStorage(searchParams.game+"-"+searchParams.browserid);
 
     res.writeHead(200, {
       "Content-Type": "text/plain"
