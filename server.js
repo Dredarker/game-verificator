@@ -3,7 +3,7 @@ const http = require("http");
 const PORT = process.env.PORT || 3000;
 const STORAGEAPI = process.env.storageAPI;
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -43,8 +43,10 @@ server.listen(PORT, () => {
 });
 
 async function getInStorage(key) {
-  fetch("https://ikelene.net/storage/get.php", {
+  let response = await fetch("https://ikelene.net/storage/get.php", {
     method: 'POST',
     body: {apiKey: STORAGEAPI, key}
-  })
+  });
+  let json = await response.json();
+  console.log(json);
 }
