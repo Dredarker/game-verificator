@@ -10,13 +10,10 @@ const server = http.createServer((req, res) => {
 
   if (req.url === "/healthz") {res.writeHead(200, {"Content-Type": "text/plain"}); return res.end("200 OK");}
   else {
-    const url = new URL(req.url, `https://${req.headers.host || "localhost"}`);
-    console.log(url.searchParams);
-
     res.writeHead(200, {
-      "Content-Type": "text/plain; charset=utf-8"
+      "Content-Type": "text/plain"
     });
-    res.end("got");
+    res.end("200 OK");
   }
 });
 
