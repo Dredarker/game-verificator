@@ -13,8 +13,8 @@ const server = http.createServer((req, res) => {
     return res.end("200 OK");
   } else {
     const url = new URL("https://localhost:3000"+req.url);
+    console.log(url)
     for (let [name, value] of url.search) {
-      console.log(name, value);
     }
     res.writeHead(200, {
       "Content-Type": "text/plain"
