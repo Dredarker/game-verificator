@@ -12,7 +12,10 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, {"Content-Type": "text/plain"});
     return res.end("200 OK");
   } else {
-    console.log(req);
+    const url = new URL("https://localhost:3000"+req.url);
+    for (let [name, value] of url.search) {
+      console.log(name, value);
+    }
     res.writeHead(200, {
       "Content-Type": "text/plain"
     });
