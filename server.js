@@ -14,15 +14,27 @@ const server = http.createServer((req, res) => {
   } else {
     const url = new URL("https://localhost:3000"+req.url);
     const searchParams = Object.fromEntries(url.searchParams.entries())
+    if (!avaliablegames.includes(searchParams.game)) {
+      res.writeHead(400, {
+        "Content-Type": "text/plain"
+      });
+      return res.end("Not found game");
+    } else if (!searchParams.browserid) {
+      res.writeHead(400, {
+        "Content-Type": "text/plain"
+      });
+      return res.end("Browser id is empty");
+    }
+    let keyverify = null;
 
     if (searchParams.game === "cubix") {
-      searchParams.browserid
+      keyverify = await getInStorage(searchParams.game+"-"+searchParams.browserid);
     }
 
     res.writeHead(200, {
       "Content-Type": "text/plain"
     });
-    return res.end("200 OK");
+    return res.end(keyverify);
   }
 });
 
