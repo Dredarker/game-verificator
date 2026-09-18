@@ -13,9 +13,12 @@ const server = http.createServer((req, res) => {
     return res.end("200 OK");
   } else {
     const url = new URL("https://localhost:3000"+req.url);
-    console.log(url)
-    for (let [name, value] of url.search) {
+    const searchParams = Object.fromEntries(url.searchParams.entries())
+
+    if (searchParams.game === "cubix") {
+      searchParams.browserid
     }
+
     res.writeHead(200, {
       "Content-Type": "text/plain"
     });
@@ -26,10 +29,6 @@ const server = http.createServer((req, res) => {
 server.listen(PORT, () => {
   console.log(`HTTP server listening on port ${PORT}`);
 });
-
-function isGame(key, value, value2) {
-  return key === "game" && value === value2
-}
 
 async function getInStorage(key) {
   fetch("https://ikelene.net/storage/get.php", {
