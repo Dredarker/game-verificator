@@ -40,11 +40,11 @@ server.listen(PORT, () => {
 });
 
 async function getInStorage(key) {
-  console.log(STORAGEAPI+"; "+key)
+  let body = {apiKey: STORAGEAPI, key};
   let response = await fetch("https://ikelene.net/storage/get.php", {
     method: 'POST',
-    body: {apiKey: STORAGEAPI, key}
+    body: JSON.stringify(body)
   });
   let json = await response.json();
-  console.log(json);
+  return json.data.value;
 }
